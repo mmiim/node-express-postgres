@@ -6,8 +6,8 @@ router.get('/', function (req, res, next) {
   const userId = req.session.userid;
   const isAuth = Boolean(userId);
   res.render('signup', {
-    isAuth: isAuth,
     title: 'Sign up',
+    isAuth: isAuth,
   });
 });
 
@@ -24,8 +24,8 @@ router.post('/', function (req, res, next) {
     .then(function (result) {
       if (result.length !== 0) {
         res.render("signup", {
-          isAuth: isAuth,
           title: "Sign up",
+          isAuth: isAuth,
           errorMessage: ["このユーザ名は既に使われています"],
         }) 
       } else if (password === repassword) {
@@ -37,15 +37,15 @@ router.post('/', function (req, res, next) {
           .catch(function (err) {
             console.error(err);
             res.render("signup", {
-              isAuth: isAuth,
               title: "Sign up",
+              isAuth: isAuth,
               errorMessage: [err.sqlMessage],
             });
           });
       } else {
         res.render("signup", {
-          isAuth: isAuth,
           title: "Sign up",
+          isAuth: isAuth,
           errorMessage: ["パスワードが一致しません"],
         });
       }
@@ -53,8 +53,8 @@ router.post('/', function (req, res, next) {
     .catch(function (err) {
       console.error(err);
       res.render("signup", {
-        isAuth: isAuth,
         title: "Sign up",
+        isAuth: isAuth,
         errorMessage: [err.sqlMessage],
       });
     });

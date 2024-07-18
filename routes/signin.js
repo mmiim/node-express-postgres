@@ -6,8 +6,8 @@ router.get('/', function (req, res, next) {
   const userId = req.session.userid;
   const isAuth = Boolean(userId);
   res.render("signin", {
-    isAuth: isAuth,
     title: "Sign in",
+    isAuth: isAuth,
   });
 });
 
@@ -26,8 +26,8 @@ router.post('/', function (req, res, next) {
     .then((results) => {
       if (results.length === 0) {
         res.render("signin", {
-          isAuth: isAuth,
           title: "Sign in",
+          isAuth: isAuth,
           errorMessage: ["ユーザが見つかりません"],
         });
       } else {
@@ -38,8 +38,8 @@ router.post('/', function (req, res, next) {
     .catch(function (err) {
       console.error(err);
       res.render("signin", {
-        isAuth: isAuth,
         title: "Sign in",
+        isAuth: isAuth,
         errorMessage: [err.sqlMessage],
       });
     });
