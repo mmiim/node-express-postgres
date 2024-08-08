@@ -7,20 +7,18 @@ const cookieSession = require("cookie-session");
 const secret = "secretCuisine123";
 
 module.exports = function (app) {
-    passport.serializeUser(function(user, done) {
-        console.log("serializeUser");
-        done(null, user.id);
-    });
+  passport.serializeUser(function(user, done) {
+    done(null, user.id);
+  });
 
-    passport.deserializeUser(function (id, done) {
-    console.log("deserializeUser");
+  passport.deserializeUser(function (id, done) {
     try {
-        const user = User.findById(id);
-        done(null, user);
+      const user = User.findById(id);
+      done(null, user);
     } catch (error) {
-        done(error, null);
+      done(error, null);
     }
-    });
+  });
 
   passport.use(new LocalStrategy({
       usernameField: "username",

@@ -17,7 +17,6 @@ async function findById(userId) {
         if (results.length === 0) {
           return null;
         }
-        console.log(results[0]);
         return results[0];
       });
   }
