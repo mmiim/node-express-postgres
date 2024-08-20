@@ -4,29 +4,130 @@
   <title><%= title %></title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
         integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+        <style>
+          body {
+              font-family: Arial, sans-serif;
+              margin: 0;
+              padding: 0;
+              background-color: #f9f9f9;
+          }
+          header {
+              background-color: #f1f1f1;
+              padding: 10px 20px;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+          }
+          header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+          .container {
+              padding: 20px;
+              max-width: 600px;
+              margin: 0 auto;
+          }
+          .todo-form {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 20px;
+          }
+          .todo-form input[type="text"],
+          .todo-form input[type="date"] {
+              width: 45%;
+              padding: 10px;
+              font-size: 16px;
+              border: 1px solid #ccc;
+              border-radius: 5px;
+          }
+          .todo-form button {
+              padding: 10px 20px;
+              font-size: 16px;
+              color: white;
+              background-color: #28a745;
+              border: none;
+              border-radius: 5px;
+              cursor: pointer;
+          }
+          .todo-list {
+              list-style-type: none;
+              padding: 0;
+          }
+          .todo-item {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding: 10px;
+              border-bottom: 1px solid #ccc;
+          }
+          .todo-item label {
+              font-size: 18px;
+              margin-left: 10px;
+          }
+          .todo-item input[type="checkbox"] {
+              transform: scale(1.5);
+          }
+          .todo-item .deadline {
+              font-size: 16px;
+              color: #999;
+          }
+      </style>
 </head>
 <body>
   <%- include('./header'); %>
   <%- include('./error_messages'); %>
   <% if(isAuth) { %>
+    <h1>タスクの追加</h1>
     <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <form action="/" method="post">
-            <label>タスクの追加</label>
-            <input required type="text" name="add" placeholder="何をする?"/>
-            <input class="btn btn-success" type="submit" value="追加"/>
+          <form action="/" method="post" class="todo-form" id="todo-form">
+            <input required type="text" id="todo-input" name="add" placeholder="何をする?"/>
+            <input type="date" id="deadline-input" required>
+            <input class="submit" type="submit" value="追加"/>
           </form>
-        </div>
-        <div class="col-md-6">
-          <ul>
-            <% for(let todo of todos){ %>
-              <li><span><%= todo.content %></span></li>
-            <% } %>
-          </ul>
-        </div>
-      </div>
+          <ul class="todo-list" id="todo-list"></ul>
     </div>
+    <script>
+      document.getElementById('todo-form').addEventListener('submit', function(e) {
+          e.preventDefault();
+
+          const todoInput = document.getElementById('todo-input');
+          const deadlineInput = document.getElementById('deadline-input');
+          const todoList = document.getElementById('todo-list');
+
+          const todoText = todoInput.value;
+          const deadlineText = deadlineInput.value;
+
+          if (todoText && deadlineText) {
+              const listItem = document.createElement('li');
+              listItem.className = 'todo-item';
+
+              const label = document.createElement('label');
+              const checkbox = document.createElement('input');
+              checkbox.type = 'checkbox';
+              checkbox.addEventListener('change', function() {
+                  if (this.checked) {
+                      todoList.removeChild(listItem);
+                  }
+              });
+
+              const deadlineSpan = document.createElement('span');
+              deadlineSpan.className = 'deadline';
+              deadlineSpan.textContent = `締め切り: ${deadlineText}`;
+
+              label.appendChild(checkbox);
+              label.appendChild(document.createTextNode(todoText));
+
+              listItem.appendChild(label);
+              listItem.appendChild(deadlineSpan);
+              todoList.appendChild(listItem);
+
+              todoInput.value = '';
+              deadlineInput.value = '';
+          }
+      });
+  </script>
   <% } else { %>
     <h1>Welcome to the TodoApp</h1>
     <a class="btn btn-danger" href="/signup" role="button">Sign up now!</a>

@@ -4,20 +4,77 @@
   <title><%= title %></title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
         integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+        <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100vh;
+                    margin: 0;
+                    background-color: #f9f9f9;
+                }
+                .container {
+                    width: 400px;
+                    padding: 20px;
+                    background-color: #fff;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                    text-align: center;
+                }
+                .form-group {
+                    margin-bottom: 15px;
+                    text-align: left;
+                }
+                .form-group label {
+                    display: block;
+                    margin-bottom: 5px;
+                }
+                .form-group input {
+                    width: 100%;
+                    padding: 10px;
+                    box-sizing: border-box;
+                }
+                .form-group input[type="text"],
+                .form-group input[type="password"] {
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                }
+                .form-group input[type="submit"] {
+                    background-color: #007bff;
+                        color: white;
+                        border: none;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        font-size: 16px;
+                }
+                .form-group input[type="submit"]:hover {
+                    background-color: #0056b3;
+                }
+                .signin-link {
+                    margin-top: 20px;
+                    display: block;
+                    text-align: right;
+                }
+            </style>
 </head>
 <body>
+        <div class="container">
 <%- include('./header'); %>
 <%- include('./error_messages'); %>
-<div class="container">
+
   <form action="/signin" method="post">
+        <div class="form-group">
     <label>ユーザ名</label>
     <input required type="text" name="username"/>
-    <br>
+    </div>
+    <div class="form-group">
     <label>パスワード</label>
     <input required type="password" name="password"/>
-    <br>
-    <input class="btn btn-primary" type="submit" value="Sign in"/>
-  </form>
+    </div>
+    <div class="form-group">
+    <input class="submit" type="submit" value="Sign in"/>
+</div>  
+</form>
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
